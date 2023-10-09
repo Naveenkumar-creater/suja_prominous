@@ -14,10 +14,10 @@ class OverdueNotificationRepositoryImpl
 
   @override
   Future<OverdueNotificationModel> getOverdueNotification(
-      int count, String token) async {
+ String token) async {
     OverdueNotificationModel overdueNotificationModel =
         await overdueNotificationDataSource.getOverdueNotification(
-            count, token);
+            token);
 
     return overdueNotificationModel;
   }

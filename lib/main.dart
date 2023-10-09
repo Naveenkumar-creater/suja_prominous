@@ -10,6 +10,7 @@ import 'package:suja_shoie_app/feature/presentation/providers/loginprovider.dart
 import 'package:suja_shoie_app/feature/presentation/providers/operator_provider.dart';
 import 'package:suja_shoie_app/feature/presentation/providers/theme_providers.dart';
 import 'package:suja_shoie_app/constant/utils/theme_styles.dart';
+import 'feature/data/core/api_constant.dart';
 import 'feature/presentation/providers/checklist_provider.dart';
 import 'feature/presentation/providers/datapoint_provider.dart';
 import 'feature/presentation/providers/notification_provider.dart';
@@ -18,7 +19,10 @@ import 'feature/presentation/providers/qrscanner_provider.dart';
 // Make sure you have this import if you are using the 'image' package
 
 
-void main() {
+void main() async{
+    // Ensure Flutter framework is initialized
+  WidgetsFlutterBinding.ensureInitialized();
+   await ApiConstant.initialize();
   runApp(
     const MyApp(),
   );

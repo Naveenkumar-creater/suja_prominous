@@ -1,16 +1,33 @@
 import 'dart:async';
 import 'dart:convert';
 // ignore: depend_on_referenced_packages
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 class ApiConstant {
-  static const String baseUrl =
-      "http://192.168.29.131:8081/AtmaInterfaceAPI/wsservice";
+  
+  static String baseUrl = "";
+
+  static Future<void> initialize() async {
+    try {
+      final configJson = await rootBundle.loadString('assets/config.json');
+      final config = json.decode(configJson);
+      baseUrl = config['base_url'];
+    } catch (e) {
+      print("Error loading configuration: $e");
+    }
+  }
 
   static const String fromDate = "2023-08-01 10:00:00";
   static const String clientId = "vijay";
+//  static  makeApiRequest2(
 
-  Future<dynamic> makeApiRequest({
+  
+//  ){
+//   print("makReques2");
+//  }
+
+  Future<dynamic>  makeApiRequest({
     required String url,
     required Map<String, String> headers,
     required dynamic requestBody,
@@ -19,7 +36,7 @@ class ApiConstant {
     try {
       final response = await http
           .post(
-            Uri.parse(url),
+    Uri.parse(url),
             headers: headers,
             body: jsonEncode(requestBody),
           )
@@ -37,3 +54,4 @@ class ApiConstant {
     }
   }
 }
+

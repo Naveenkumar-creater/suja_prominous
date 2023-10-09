@@ -172,7 +172,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: TextField(
+                    child: TextFormField(
                       controller: dataPointsController,
                       onChanged: (text) {
                         setState(() {
@@ -197,6 +197,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         hintText: '',
                         labelStyle: TextStyle(color: Colors.black),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter a value'; // Error message when empty
+                        }
+                        return null; // Return null when valid
+                      },
                     ),
                   ),
                   IconButton(
@@ -234,7 +240,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: TextField(
+                      child: TextFormField(
                         controller: entryController,
                         onChanged: (text) {
                           entry.dataPoints = text;
@@ -251,6 +257,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                           hintText: '',
                           labelStyle: TextStyle(color: Colors.black),
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter a value'; // Error message when empty
+                          }
+                          return null; // Return null when valid
+                        },
                       ),
                     ),
                     IconButton(

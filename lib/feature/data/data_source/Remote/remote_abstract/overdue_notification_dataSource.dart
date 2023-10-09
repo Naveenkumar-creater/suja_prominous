@@ -3,5 +3,5 @@ import 'package:suja_shoie_app/feature/data/model/overdue_notification_model.dar
 
 abstract class OverdueNotificationDataSource {
   Future<OverdueNotificationModel> getOverdueNotification(
-      int count, String token);
+      String token);
 }

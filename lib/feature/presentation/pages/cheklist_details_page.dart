@@ -70,6 +70,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
   Map<int, List<String>> dataPointValuesMap = {};
   Map<int, List<String>> userEnteredDataPoints = {};
   Map<int, List<DataEntry>> myStatefulWidgetDataMap = {};
+  final GlobalKey<FormState> operatorFormKey = GlobalKey<FormState>();
 
   String getStatusIcon(int method) {
     if (method == 1) {
@@ -495,12 +496,11 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
           .add(checkpoint); // Add the checkpoint to the checklist
     }
 
-    // Convert the s to JSON
     final requestBody = jsonEncode(checklistRequest.toJson());
 
     print(requestBody);
 
-    const timeoutDuration = const Duration(seconds: 30);
+    const timeoutDuration = Duration(seconds: 30);
     try {
       http.Response response = await http
           .post(
@@ -516,16 +516,21 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
       print(response.body);
 
       if (response.statusCode == 200) {
-        final responseJson = jsonDecode(response.body);
-        print(responseJson);
-        return responseJson;
+        try {
+          final responseJson = jsonDecode(response.body);
+          print(responseJson);
+          return responseJson;
+        } catch (e) {
+          // Handle the case where the response body is not a valid JSON object
+          throw ("Invalid JSON response from the server");
+        }
       } else {
-        throw ("server busy");
+        throw ("Server responded with status code ${response.statusCode}");
       }
     } on TimeoutException {
       throw ('Connection timed out. Please check your internet connection.');
     } catch (e) {
-      ErrorShow.showSnackBar(context, e.toString());
+      ShowError.showAlert(context, e.toString());
     }
   }
 
@@ -582,16 +587,50 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                     child: Row(
                       children: [
                         ElevatedButton(
-                            onPressed: () {
-                              submitChecklist(context, "submit_checklist", 3);
-                              _navigateBack();
+                          onPressed: () async {
+                            if (personName.isNotEmpty && !isTextFieldVisible) {
+                              try {
+                                final response = await submitChecklist(
+                                    context, "submit_checklist", 2);
+                                if (response['response_code'] == 4 ||
+                                    response['response_code'] == 5 ||
+                                    response['response_code'] == 6) {
+                                  ShowError.showAlert(
+                                      context, response['response_msg']);
+                                  ;
+                                } else {
+                                  // If response_code is not 4, 5, or 6, proceed to _navigateBack()
+                                  _navigateBack();
+                                  popupData.clear();
+                                  userEnteredDataPoints.clear();
+                                  myStatefulWidgetDataMap.clear();
+                                  numberController.clear();
+                                }
+                              } catch (error) {
+                                // Handle and show the error message here
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(error.toString()),
+                                    backgroundColor: Colors.amber,
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          child: const Text("Submit"),
+                        ),
 
-                              popupData.clear();
-                              userEnteredDataPoints.clear();
-                              myStatefulWidgetDataMap.clear();
-                              numberController.clear();
-                            },
-                            child: const Text("Submit")),
+                        // ElevatedButton(
+                        //     onPressed: () {
+                        //       submitChecklist(context, "submit_checklist", 3);
+                        //       _navigateBack();
+
+                        //       popupData.clear();
+                        //       userEnteredDataPoints.clear();
+                        //       myStatefulWidgetDataMap.clear();
+                        //       numberController.clear();
+                        //     },
+                        //     child: const Text("Submit")),
                         const SizedBox(
                           width: 20,
                         ),
@@ -789,8 +828,14 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                   if (selectedDropdownValues[index].first !=
                                       "Passed") {
                                     if (value == null || value.isEmpty) {
-                                      return 'Required Field';
+                                      return 'Enter the Notes';
                                     }
+                                    //                                 if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+                                    //   return 'Cannot contain special symbols';
+                                    // }
+                                 if (value.startsWith(' ')) {
+      return 'Notes cannot start with a space';
+    }
                                   }
                                   return null; // Return null when "Passed" is selected
                                 },
@@ -805,7 +850,6 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                           builder: (context, DetailsProvider, _) {
                             final response = DetailsProvider.user?.responseData;
                             final datapoint = response?.checklistDatapointsList;
-
                             // Ensure that datapointValues has at least as many elements as datapoint
                             datapointControllers = List.generate(
                               datapoint?.length ?? 0,
@@ -823,7 +867,6 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                 }
                               },
                             );
-
                             // Update the TextEditingController objects with locally stored values
                             if (userEnteredDataPoints.containsKey(index)) {
                               final List<String> storedValues =
@@ -845,7 +888,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Data Point:"),
+                                const Text("Data Point:"),
                                 Card(
                                   elevation: 5,
                                   shadowColor: Colors.black,
@@ -877,7 +920,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Row(
+                                                const Row(
                                                   children: [
                                                     Column(
                                                       children: [
@@ -1022,10 +1065,33 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                     // userEnteredDataPoints.clear();
                                     // myStatefulWidgetDataMap.clear();
 
-                                    selectedDropdownValues[index] = [
-                                      "Select Answer"
-                                    ];
+                                    if (selectedDropdownValues[index].first !=
+                                        "Passed") if (!_formKey.currentState!.validate())
+                                      selectedDropdownValues[index] = [
+                                        "Select Answer"
+                                      ];
                                   });
+
+                                  final Map<String, dynamic> data = {
+                                    'note': noteController.text,
+                                    // 'description':
+                                    //     descriptionController.text ?? "",
+                                    // 'dataPoints': dataPointValues,
+                                    'images':
+                                        capturedImages, // Store captured images
+                                  };
+
+                                  popupData[index] = data;
+                                  final List<String> editedValues =
+                                      datapointControllers
+                                          .map((controller) => controller.text)
+                                          .toList();
+
+                                  userEnteredDataPoints[index] = editedValues;
+
+                                  myStatefulWidgetDataMap[index] =
+                                      localDataEntries;
+
                                   Navigator.of(context)
                                       .pop(); // Close the dialog
                                 },
@@ -1101,7 +1167,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                               ? const Color(0xFF212121)
                               : const Color(0xFF25476A),
                           padding: const EdgeInsets.symmetric(horizontal: 16),
-                          height: 115,
+                          height: 140,
                           child: SafeArea(
                             child: Center(
                               child: Column(
@@ -1138,48 +1204,94 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                             child: Row(
                                               children: [
                                                 Expanded(
-                                                  child: Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            left:
-                                                                defaultPadding *
-                                                                    12),
-                                                    decoration:
-                                                        const BoxDecoration(
+                                                  child: Form(
+                                                    key: operatorFormKey,
+                                                    child: Container(
+                                                      margin: const EdgeInsets
+                                                              .only(
+                                                          left: defaultPadding *
+                                                              12),
+                                                      decoration: const BoxDecoration(
+                                                       
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          5))),
+                                                      child: TextFormField(
+                                                        controller:
+                                                            numberController,
+                                                        style: const TextStyle(
                                                             color:
-                                                                Color
-                                                                    .fromARGB(
-                                                                        93,
-                                                                        189,
-                                                                        189,
-                                                                        189),
+                                                                Colors.black),
+                                                        validator: (value) {
+
+                                                          if (value == null ||
+                                                              value.isEmpty) {
+                                                            return 'Please enter Operator Id';
+                                                          }
+                                                          if (value.contains(RegExp(
+                                                              r'[!@#$%^&*(),.?":{}|<>]'))) {
+                                                            return 'Operator Id cannot contain special symbols';
+                                                          }
+                                                          if (value
+                                                              .contains(' ')) {
+                                                            return 'Operator Id cannot contain spaces';
+                                                          }
+                                                          return null;
+                                                        },
+                                                        decoration:
+                                                            InputDecoration(
+                                                          hintText:
+                                                              'Enter Operator Id',
+                                                          hintStyle:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .black45),
+                                                          filled: true,
+                                                          fillColor:
+                                                              Colors.white,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize: 12),
+                                                          contentPadding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 30),
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Colors
+                                                                    .blueGrey
+                                                                    .shade50),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            5))),
-                                                    child: TextField(
-                                                      style: const TextStyle(
-                                                          color: Colors.white),
-                                                      controller:
-                                                          numberController,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      decoration:
-                                                          const InputDecoration(
-                                                        hintText:
-                                                            '    Enter operator id ',
-                                                        hintStyle: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                        border:
-                                                            InputBorder.none,
+                                                                    .circular(
+                                                                        5),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Colors
+                                                                    .blueGrey
+                                                                    .shade50),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                                 TextButton(
-                                                  onPressed: handleSubmit,
+                                                  
+                                                  onPressed:(){
+                                                        if (operatorFormKey.currentState?.validate() == true) {
+                                                              handleSubmit();
+                                                        }
+                                                  },
                                                   child: const Text(
                                                     'OK',
                                                     style: TextStyle(
@@ -1221,7 +1333,12 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                       fit: BoxFit.cover,
                                       errorBuilder:
                                           (context, error, stackTrace) {
-                                        return Text("Error loading image");
+                                        return Image.asset(
+                                      'assets/images/Suji shoie1.jpg', // Replace with the path to your placeholder image
+                                      width: 50, // Set the width as needed
+                                      height: 30, // Set the height as needed
+                                      fit: BoxFit.cover,
+                                    );
                                       },
                                     )
                                   : Image.asset(
@@ -1369,7 +1486,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                                                 // Add more options as needed
                                                               ].map<
                                                                   DropdownMenuItem<
-                                                                     String>>((String
+                                                                      String>>((String
                                                                   value) {
                                                                 return DropdownMenuItem<
                                                                     String>(
@@ -1433,10 +1550,18 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                   if (personName.isNotEmpty &&
                                       !isTextFieldVisible) {
                                     try {
-                                      await submitChecklist(
+                                      final response = await submitChecklist(
                                           context, "submit_checklist", 2);
-                                      // Only navigate back if submission was successful
-                                      _navigateBack();
+                                      if (response['response_code'] == 4 ||
+                                          response['response_code'] == 5 ||
+                                          response['response_code'] == 6) {
+                                        ShowError.showAlert(
+                                            context, response['response_msg']);
+                                        ;
+                                      } else {
+                                        // If response_code is not 4, 5, or 6, proceed to _navigateBack()
+                                        _navigateBack();
+                                      }
                                     } catch (error) {
                                       // Handle and show the error message here
                                       ScaffoldMessenger.of(context)

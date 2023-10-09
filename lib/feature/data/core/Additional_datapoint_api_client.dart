@@ -10,7 +10,7 @@ class AdditionalDataPointClient {
 
      final apiConstant = ApiConstant();
       final headers = {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json', 
     };
 
     return await apiConstant.makeApiRequest(

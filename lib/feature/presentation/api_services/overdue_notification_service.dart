@@ -20,7 +20,7 @@ import '../../data/data_source/Remote/remote_abstract/overdue_notification_dataS
 class OverdueNotificationService {
   Future<void> getOverdueNotification({
     required BuildContext context,
-    required int count,
+    // required int count,
   }) async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -41,7 +41,7 @@ class OverdueNotificationService {
           OverdueNotificationUsecase(overdueNotificationRepository);
 
       OverdueNotificationEntity user =
-          await overdueNotificationUsecase.execute(count, token);
+          await overdueNotificationUsecase.execute( token);
 
       // ignore: use_build_context_synchronously
       var assetliststatus =
@@ -50,7 +50,7 @@ class OverdueNotificationService {
 
       assetliststatus.setUser(user);
     } catch (e) {
-      ErrorShow.showSnackBar(context, e.toString());
+      ShowError.showAlert(context, e.toString());
     }
   }
 }

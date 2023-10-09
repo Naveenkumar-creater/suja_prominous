@@ -51,7 +51,7 @@ class LoginApiService {
         (route) => false,
       );
     } catch (e) {
-      ErrorShow.showSnackBar(context, e.toString());
+      ShowError.showAlert(context, e.toString());
     }
   }
 
@@ -70,7 +70,7 @@ class LoginApiService {
         (route) => false,
       );
     } catch (e) {
-      ErrorShow.showSnackBar(context, e.toString());
+      ShowError.showAlert(context, e.toString());
     }
   }
 
@@ -95,7 +95,7 @@ class LoginApiService {
   //     var userProvid = Provider.of<LoginProvider>(context, listen: false);
   //     userProvid.setUser(user);
   //   } catch (e) {
-  //    ErrorShow.showSnackBar(context, e.toString());
+  //    ShowError.showAlert(context, e.toString());
   //   }
   // }
 

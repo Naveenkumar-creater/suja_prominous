@@ -34,7 +34,7 @@ class _NotificationCard extends State<NotificationCard> {
     try {
       await _notificationService.getOverdueNotification(
         context: context,
-        count: 100,
+      
       );
       setState(() {
         isLoading = false; // Set isLoading to false when data is fetched
@@ -100,28 +100,25 @@ class _NotificationCard extends State<NotificationCard> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          asset.assetname,
+                                          asset.alndescription,
                                           style: const TextStyle(
                                               fontSize: 12,
                                               color: Colors.black),
                                         ),
                                         Text(
-                                          asset.acmphtemplatename,
+                                          asset.alndate,
                                           style: const TextStyle(
                                               fontSize: 12,
                                               color: Colors.black),
                                         ),
                                         Text(
-                                          asset.locname,
+                                          asset.alndescription,
                                           style: const TextStyle(
                                               fontSize: 12,
                                               color: Colors.black),
                                         ),
                                         Text(
-                                          asset.acrpinspectiondate.substring(
-                                              0,
-                                              asset.acrpinspectiondate.length -
-                                                  8),
+                                          asset.alndate,
                                           style: const TextStyle(
                                               fontSize: 12,
                                               color: Colors.black),

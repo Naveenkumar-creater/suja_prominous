@@ -13,10 +13,10 @@ class OverdueNotificationDataSourceimpl extends OverdueNotificationDataSource {
 
   @override
   Future<OverdueNotificationModel> getOverdueNotification(
-      int count, String token) async {
+      String token) async {
     try {
       final response =
-          await overdueNotificationClient.getOverdueNotification(count, token);
+          await overdueNotificationClient.getOverdueNotification( token);
 
       if (response != null) {
         // ignore: avoid_print

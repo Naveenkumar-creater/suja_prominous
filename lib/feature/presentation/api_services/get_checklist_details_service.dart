@@ -20,7 +20,7 @@ import '../../data/data_source/Remote/reomote_data_source/get_checklist_details_
 import '../providers/get_checklist_details_provider.dart';
 
 class GetChecklistService {
-  Future<void> getCheckListDetails({
+ Future<void> getCheckListDetails({
     required BuildContext context,
     required int planId,
     required int acrpinspectionstatus
@@ -52,7 +52,7 @@ class GetChecklistService {
 
       checkliststatus.setUser(user);
     } catch (e) {
-      ErrorShow.showSnackBar(context, e.toString());
+      ShowError.showAlert(context, e.toString());
     }
   }
 }

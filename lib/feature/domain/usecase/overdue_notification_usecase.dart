@@ -8,7 +8,7 @@ class OverdueNotificationUsecase {
 
   OverdueNotificationUsecase(this.overdueNotificationRepository);
 
-  Future<OverdueNotificationEntity> execute(int count, String token) async {
-    return overdueNotificationRepository.getOverdueNotification(count, token);
+  Future<OverdueNotificationEntity> execute( String token) async {
+    return overdueNotificationRepository.getOverdueNotification(token);
   }
 }

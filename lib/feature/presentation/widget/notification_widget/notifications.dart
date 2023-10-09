@@ -27,7 +27,9 @@ class Notifications extends StatelessWidget {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [NotificationCard(context),
+              children: [
+                
+                NotificationCard(context),
                 Headings(text:'Notifications'),
                 SizedBox(height:6)
               ]),

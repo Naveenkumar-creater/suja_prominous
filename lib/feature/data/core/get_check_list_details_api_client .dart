@@ -29,7 +29,7 @@ class GetCheckListDetailsClient {
       final headers = {
       'Content-Type': 'application/json',
     };
-
+  
     return await apiConstant.makeApiRequest(
       url: ApiConstant.baseUrl,
       headers: headers,

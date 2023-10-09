@@ -46,7 +46,7 @@ class OperatorService {
 
  operatorname.setUser(data);
     } catch (e) {
-      ErrorShow.showSnackBar(context, e.toString());
+      ShowError.showAlert(context, e.toString());
     }
   }
 }

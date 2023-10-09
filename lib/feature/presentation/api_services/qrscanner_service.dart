@@ -49,7 +49,7 @@ class QrScannerService {
 
       qrScannerChecklist.setUser(user);
     } catch (e) {
-      ErrorShow.showSnackBar(context, e.toString());
+      ShowError.showAlert(context, e.toString());
     }
   }
 }

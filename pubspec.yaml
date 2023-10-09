@@ -47,6 +47,7 @@ dependencies:
   image: ^4.0.17
   cached_network_image: ^3.2.3
   flutter_image_compress: ^2.0.4
+  flutter_form_builder: ^8.0.0
   
   
 
@@ -73,6 +74,7 @@ flutter:
     - assets/images/
     - assets/animations/
     - assets/raw/
+    - assets/config.json
     
   
   #   - images/a_dot_ham.jpeg

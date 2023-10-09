@@ -114,8 +114,7 @@ class ChecklistRequest {
       'acrh_acmph_id': acrhAcmphId,
       'acrh_id': acrhid,
       'acrp_id': planid,
-      'check_points':
-          checkPoints.map((checkpoint) => checkpoint.toJson()).toList(),
+      'check_points': checkPoints.map((checkpoint) => checkpoint.toJson()).toList(),
     };
   }
 }

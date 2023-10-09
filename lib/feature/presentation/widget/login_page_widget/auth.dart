@@ -47,7 +47,7 @@ class _AuthState extends State<Auth> {
   style: const TextStyle(color: Colors.black),
   validator: (value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter EmployeId';
+      return 'Please enter Employee Id';
     }
     if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       return 'Email/Phone cannot contain special symbols';
