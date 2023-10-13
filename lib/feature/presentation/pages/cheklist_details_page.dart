@@ -1,17 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:suja_shoie_app/constant/utils/lottieLoadingAnimation.dart';
 import 'package:suja_shoie_app/constant/utils/theme_styles.dart';
 import 'package:suja_shoie_app/feature/presentation/api_services/datapoint_service.dart';
@@ -27,8 +24,8 @@ import 'package:suja_shoie_app/feature/presentation/widget/checklist_details/add
 import '../../../constant/utils/show_snakbar.dart';
 import '../../../models/chepoint_request.model.dart';
 import '../../data/core/api_constant.dart';
+import '../api_services/initate_pause_service.dart';
 import '../api_services/operator_service.dart';
-import '../providers/asset_list_provider.dart';
 import '../providers/operator_provider.dart';
 import '../widget/checklist_details/take_photo.dart';
 import '../widget/home_page_widget/work_schedule/assetlist_workschedule/asset_list_workschedule.dart';
@@ -41,8 +38,8 @@ class CheckPointDetails extends StatefulWidget {
   final int? acrpinspectionstatus;
   final int? assetId;
 
-  CheckPointDetails(
-      {required this.planId,
+  const CheckPointDetails(
+      {super.key, required this.planId,
       this.assetId,
       this.capturedImages,
       this.pageId,
@@ -55,6 +52,7 @@ class CheckPointDetails extends StatefulWidget {
 class _CheckPointDetailsState extends State<CheckPointDetails> {
   final GetChecklistService _checkListService = GetChecklistService();
   final TextEditingController numberController = TextEditingController();
+ final  InitiatePauseService initiatePauseService=InitiatePauseService();
 
   String personName = ''; // State variable to store the personName
 
@@ -71,6 +69,10 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
   Map<int, List<String>> userEnteredDataPoints = {};
   Map<int, List<DataEntry>> myStatefulWidgetDataMap = {};
   final GlobalKey<FormState> operatorFormKey = GlobalKey<FormState>();
+
+  void pauseStatus(){
+    initiatePauseService.initiatePause(context: context, id: widget.planId);
+  }
 
   String getStatusIcon(int method) {
     if (method == 1) {
@@ -143,7 +145,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
               ?.responseData;
 
       if (response != null) {
-        final checklist = response?.getChecklistDetails ?? [];
+        final checklist = response.getChecklistDetails ?? [];
 
         selectedDropdownValues = List.generate(
           checklist.length,
@@ -246,17 +248,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
 
           // Show the Snackbar only if it hasn't been shown yet
           if (!isSnackbarShown) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Center(
-                  child: Text(
-                    'Invalid operator ID',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                backgroundColor: Colors.amber,
-              ),
-            );
+           
             isSnackbarShown =
                 true; // Set the flag to true after showing the Snackbar
           }
@@ -386,13 +378,13 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
               ?.responseData;
 
       final datapointDescriptions = responseData?.checklistDatapointsList
-              ?.map((e) => e?.amdpDatapointDescription)
-              ?.toList() ??
+              .map((e) => e.amdpDatapointDescription)
+              .toList() ??
           [];
 
       final dataAcrdp = responseData?.checklistDatapointsList
-              ?.map((e) => e?.acrdpId)
-              ?.toList() ??
+              .map((e) => e.acrdpId)
+              .toList() ??
           [];
 
       final dataPoints = userEnteredDataPoints[index] ?? [];
@@ -402,10 +394,9 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
           .asMap()
           .entries
           .where((entry) =>
-              entry.value != null &&
               entry.value.isNotEmpty &&
               entry.key < datapointDescriptions.length &&
-              datapointDescriptions[entry.key]?.isNotEmpty == true)
+              datapointDescriptions[entry.key].isNotEmpty == true)
           .toList();
 
       // List<String> assetImages = await convertFilePathsToBase64(imagesList);
@@ -415,8 +406,8 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
               ?.responseData;
 
       final addDatapointDescription = responseAddData?.additionaldatapointslist
-              ?.map((e) => e?.amdpDatapointDescription)
-              ?.toList() ??
+              .map((e) => e.amdpDatapointDescription)
+              .toList() ??
           [];
 
       final adddata = myStatefulWidgetDataMap[index] ?? [];
@@ -426,9 +417,8 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
           .asMap()
           .entries
           .where((entry) =>
-              entry.value != null &&
               entry.key < addDatapointDescription.length &&
-              addDatapointDescription[entry.key]?.isNotEmpty == true)
+              addDatapointDescription[entry.key].isNotEmpty == true)
           .toList();
 
       final checkpoint = ChecklistCheckpoint(
@@ -465,8 +455,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
 
       for (final entry in filteredAdditionalData) {
         final i = entry.key;
-        final dataEntry = entry.value
-            as DataEntry; // Assuming entry.value is a DataEntry object
+        final dataEntry = entry.value; // Assuming entry.value is a DataEntry object
         final addDatapoint = ChecklistDataPoint(
           amdpDatapointId: dataEntry.amdpId,
           acrdpId: 0,
@@ -500,7 +489,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
 
     print(requestBody);
 
-    const timeoutDuration = Duration(seconds: 30);
+    const  timeoutDuration = Duration(seconds: 30);
     try {
       http.Response response = await http
           .post(
@@ -591,13 +580,12 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                             if (personName.isNotEmpty && !isTextFieldVisible) {
                               try {
                                 final response = await submitChecklist(
-                                    context, "submit_checklist", 2);
+                                    context, "submit_checklist", 3);
                                 if (response['response_code'] == 4 ||
                                     response['response_code'] == 5 ||
                                     response['response_code'] == 6) {
                                   ShowError.showAlert(
                                       context, response['response_msg']);
-                                  ;
                                 } else {
                                   // If response_code is not 4, 5, or 6, proceed to _navigateBack()
                                   _navigateBack();
@@ -647,7 +635,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
             ),
           );
         });
-  }
+  } 
 
   Future<void> _showPopup(BuildContext context, int index) async {
     await _fetchDataPoints(index);
@@ -734,7 +722,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
     // Access notes, provide a default value if null
 
     // TextEditingController descriptionController = TextEditingController();
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     // Pre-fill the input fields with initial data
     var noteValue = "";
@@ -752,7 +740,6 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
         myStatefulWidgetDataMap[index] = newData;
       });
     }
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -770,7 +757,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                   height: 700,
                   color: Colors.white,
                   child: Form(
-                    key: _formKey,
+                    key: formKey,
                     child: Column(
                       children: [
                         Row(
@@ -855,7 +842,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                               datapoint?.length ?? 0,
                               (index) {
                                 if (index < datapoint!.length) {
-                                  final initialValue = datapoint?[index]
+                                  final initialValue = datapoint[index]
                                       .datapointValue
                                       .toString();
                                   return TextEditingController(
@@ -931,12 +918,12 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                                     ),
                                                   ],
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: defaultPadding,
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Container(
+                                                    SizedBox(
                                                       width: 135,
                                                       child: Text(
                                                           "${item?.amdpDatapointDescription}"),
@@ -945,7 +932,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                                     const SizedBox(
                                                       width: 8,
                                                     ),
-                                                    Container(
+                                                    SizedBox(
                                                       width: 275,
                                                       height:
                                                           60, // Set the desired height here
@@ -1023,7 +1010,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                               ElevatedButton(
                                 onPressed: () {
                                   // Store the data in a map
-                                  if (_formKey.currentState!.validate()) {
+                                  if (formKey.currentState!.validate()) {
                                     final Map<String, dynamic> data = {
                                       'note': noteController.text,
                                       // 'description':
@@ -1066,10 +1053,11 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                     // myStatefulWidgetDataMap.clear();
 
                                     if (selectedDropdownValues[index].first !=
-                                        "Passed") if (!_formKey.currentState!.validate())
-                                      selectedDropdownValues[index] = [
+                                        "Passed") if (!formKey.currentState!.validate()) {
+                                          selectedDropdownValues[index] = [
                                         "Select Answer"
                                       ];
+                                        }
                                   });
 
                                   final Map<String, dynamic> data = {
@@ -1145,8 +1133,8 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                 ),
               )
             : checklist.isEmpty
-                ? Scaffold(
-                    body: const Center(
+                ? const Scaffold(
+                    body: Center(
                       child: Text(
                         "No checklist data",
                         style: TextStyle(fontSize: 18),
@@ -1156,7 +1144,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                 : Scaffold(
                     appBar: AppBar(
                       automaticallyImplyLeading: true,
-                      iconTheme: IconThemeData(
+                      iconTheme: const IconThemeData(
                         color: Colors.white,
                       ),
                       toolbarHeight: 90,
@@ -1321,7 +1309,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                       actions: [
                         if (widget.acrpinspectionstatus == 3 ||
                             widget.acrpinspectionstatus == 4)
-                          Container(
+                          SizedBox(
                             width: 100,
                             height: 100,
                             child: ClipOval(
@@ -1350,7 +1338,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                             ),
                           )
                         else
-                          Container(
+                          SizedBox(
                             width: 100,
                             height: 100,
                             child: ListView.builder(
@@ -1404,7 +1392,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             width: 60,
                                             child: ListTile(
                                               title: Text("${asset.seqNo}."),
@@ -1415,7 +1403,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                             child: ListTile(
                                               title: Text(
                                                 decodedTamilText,
-                                                style: TextStyle(fontSize: 14),
+                                                style: const TextStyle(fontSize: 14),
                                               ),
                                             ),
                                           ),
@@ -1557,7 +1545,6 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                           response['response_code'] == 6) {
                                         ShowError.showAlert(
                                             context, response['response_msg']);
-                                        ;
                                       } else {
                                         // If response_code is not 4, 5, or 6, proceed to _navigateBack()
                                         _navigateBack();
@@ -1574,15 +1561,15 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                     }
                                   }
                                 },
-                                child: const Text("Save"),
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
                                   backgroundColor: personName.isNotEmpty
                                       ? Colors.blue
                                       : Colors.grey,
                                 ),
+                                child: const Text("Save"),
                               ),
-                              SizedBox(width: defaultPadding),
+                              const SizedBox(width: defaultPadding),
                               ElevatedButton(
                                 onPressed: () {
                                   if (!isAnySelectAnswer &&
@@ -1590,7 +1577,6 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                     _submitPop(context);
                                   }
                                 },
-                                child: const Text("Submit"),
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
                                   backgroundColor: !isAnySelectAnswer &&
@@ -1598,19 +1584,21 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                       ? Colors.blue
                                       : Colors.grey,
                                 ),
+                                child: const Text("Submit"),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: defaultPadding,
                               ),
                               ElevatedButton(
                                 onPressed: () {
+                              pauseStatus();
                                   _navigateBack();
                                   popupData.clear();
                                   userEnteredDataPoints.clear();
                                   myStatefulWidgetDataMap.clear();
                                   numberController.clear();
                                 },
-                                child: Text("Cancel"),
+                                child: const Text("Go Back"),
                               ),
                             ],
                           )
@@ -1622,7 +1610,7 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                 onPressed: () {
                                   _navigateBack();
                                 },
-                                child: Text("Go Back"),
+                                child: const Text("Go Back"),
                               ),
                             ],
                           ),

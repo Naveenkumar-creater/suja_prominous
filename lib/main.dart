@@ -13,6 +13,8 @@ import 'package:suja_shoie_app/constant/utils/theme_styles.dart';
 import 'feature/data/core/api_constant.dart';
 import 'feature/presentation/providers/checklist_provider.dart';
 import 'feature/presentation/providers/datapoint_provider.dart';
+import 'feature/presentation/providers/get_machine_count_provider.dart';
+import 'feature/presentation/providers/initiate_pause_provider.dart';
 import 'feature/presentation/providers/notification_provider.dart';
 import 'feature/presentation/providers/overdue_notification_provider.dart';
 import 'feature/presentation/providers/qrscanner_provider.dart';
@@ -34,9 +36,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+      
         providers: [
           ChangeNotifierProvider<LoginProvider>(
             create: (_) => LoginProvider(),
+          ),
+           ChangeNotifierProvider<GetMachineCountProvider>(
+            create: (_) => GetMachineCountProvider(),
+          ),
+          ChangeNotifierProvider<InitiateProvider>(
+            create: (_) => InitiateProvider(),
           ),
           ChangeNotifierProvider<OverdueNotificationProvider>(
             create: (_) => OverdueNotificationProvider(),

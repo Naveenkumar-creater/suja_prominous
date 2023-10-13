@@ -1,6 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
     
@@ -13,7 +12,8 @@ import '../../workorder_widget/checklist_dropdown.dart';
 
 
 class DropdownMenuWorkOrder extends StatefulWidget {
-  final Widget Open;
+  final Widget pending;
+  final Widget open;
   final Widget inProgress;
   final Widget complete;
   final Widget overdue;
@@ -26,7 +26,8 @@ class DropdownMenuWorkOrder extends StatefulWidget {
 
   const DropdownMenuWorkOrder({
     Key? key,
-    required this.Open,
+    required this.pending,
+    required this.open,
     required this.inProgress,
     required this.complete,
     required this.overdue,
@@ -44,6 +45,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuWorkOrder> {
   
 
   List<String> dropdownOptions = [
+    'Pending',
     'Open',
     'In Progress',
     'Complete',
@@ -52,6 +54,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuWorkOrder> {
   ];
 
   List<Color> valueColors = [
+    Colors.indigo,
     Colors.blue,
     Colors.orange,
     Colors.green,
@@ -60,7 +63,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuWorkOrder> {
   ];
 
 
- List<int> statusCounts = [0, 0, 0, 0,0]; // Initialize counts for each status
+ List<int> statusCounts = [0, 0, 0, 0, 0, 0]; // Initialize counts for each status
 
   @override
   void initState() {
@@ -71,7 +74,10 @@ class _DropdownMenuExampleState extends State<DropdownMenuWorkOrder> {
 
 void _loadStatusCount(int index) {
   bool isLoading = true; 
-  int count = index + 1;
+  int count = index;
+    if (count == 0) {
+    count = 101;
+  }
 
   if (count == 4) {
     count = 100;
@@ -104,7 +110,7 @@ void _loadStatusCount(int index) {
     return Center(
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: 110,
             height: 30,
             child: DropdownButton<int>(
@@ -112,7 +118,7 @@ void _loadStatusCount(int index) {
               elevation: 5,
               underline: Container(),
               value: selectedValueIndex,
-              icon: Icon(Icons.arrow_drop_down),
+              icon: const Icon(Icons.arrow_drop_down),
               iconEnabledColor: themeState.isDarkTheme ? Colors.blue : Colors.blue,
               style: TextStyle(
                 fontSize: 14.0,
@@ -182,14 +188,14 @@ class CustomBottomSheet extends StatelessWidget {
   final String text;
   final Widget content;
 
-  const CustomBottomSheet({
+  const CustomBottomSheet({super.key, 
     required this.text,
     required this.content,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 400,
       child: Padding(
         padding: const EdgeInsets.all(16),

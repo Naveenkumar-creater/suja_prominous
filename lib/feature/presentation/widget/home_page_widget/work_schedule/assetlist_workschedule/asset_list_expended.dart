@@ -10,7 +10,7 @@ class ChecklistWidget extends StatelessWidget {
   final String title;
   final int assetId; // The dynamic title you want to show
 
-  const ChecklistWidget({
+  const ChecklistWidget({super.key, 
     required this.checklist,
     required this.title,
      required this.assetId,
@@ -25,10 +25,10 @@ class ChecklistWidget extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(left: defaultPadding / 2),
+            padding: const EdgeInsets.only(left: defaultPadding / 2),
             child: Text(
               title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ),
           Expanded(

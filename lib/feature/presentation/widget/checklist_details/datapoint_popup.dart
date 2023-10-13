@@ -13,7 +13,7 @@ class DataPointsPopup extends StatefulWidget {
   final void Function(String note, String description, List<String> dataPoints)
       onSubmit;
 
-  DataPointsPopup({
+  DataPointsPopup({super.key, 
     required this.initialNote,
     required this.initialDescription,
     required this.initialDataPointValues,
@@ -53,7 +53,7 @@ class _DataPointsPopupState extends State<DataPointsPopup> {
         color: Colors.white,
         child: Column(
           children: [
-            Row(
+            const Row(
               children: [
                 Text('Add Images       :'),
                 SizedBox(
@@ -65,16 +65,16 @@ class _DataPointsPopupState extends State<DataPointsPopup> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Row(
               children: [
-                Text('Add Notes          :'),
-                SizedBox(
+                const Text('Add Notes          :'),
+                const SizedBox(
                   width: 8,
                 ),
-                Container(
+                SizedBox(
                   width: 300,
                   height: 50,
                   child: TextField(
@@ -98,7 +98,7 @@ class _DataPointsPopupState extends State<DataPointsPopup> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: defaultPadding,
             ),
             Container(
@@ -115,7 +115,7 @@ class _DataPointsPopupState extends State<DataPointsPopup> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.builder(
-                            physics: ClampingScrollPhysics(),
+                            physics: const ClampingScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: datapoint?.length ?? 0,
                             itemBuilder: (context, index) {
@@ -128,19 +128,19 @@ class _DataPointsPopupState extends State<DataPointsPopup> {
                                     children: [
                                       Row(
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 8,
                                           ),
                                           Text(
                                               "${item?.amdpDatapointDescription}"),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 28,
                                           ),
-                                          Text(":"),
-                                          SizedBox(
+                                          const Text(":"),
+                                          const SizedBox(
                                             width: 8,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: 300,
                                             height: 50,
                                             child: TextField(
@@ -179,7 +179,7 @@ class _DataPointsPopupState extends State<DataPointsPopup> {
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: defaultPadding * 3,
             ),
             Row(
@@ -194,14 +194,14 @@ class _DataPointsPopupState extends State<DataPointsPopup> {
 
                     // Close the dialog
                   },
-                  child: Text(
+                  child: const Text(
                     "Okay",
                     style: TextStyle(
                       fontSize: 13,
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 ElevatedButton(
@@ -209,7 +209,7 @@ class _DataPointsPopupState extends State<DataPointsPopup> {
                     // Handle the "Cancel" button click here
                     Navigator.of(context).pop(); // Close the dialog
                   },
-                  child: Text(
+                  child: const Text(
                     "Cancel",
                     style: TextStyle(
                       fontSize: 13,

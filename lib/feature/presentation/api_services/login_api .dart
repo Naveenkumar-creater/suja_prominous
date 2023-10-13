@@ -1,11 +1,7 @@
-
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:suja_shoie_app/constant/utils/show_snakbar.dart';
-
 import 'package:suja_shoie_app/feature/data/core/login_api_client.dart';
 import 'package:suja_shoie_app/feature/data/data_source/Remote/reomote_data_source/login_data_source_impl.dart';
 import 'package:suja_shoie_app/feature/data/repository/login_repository_imp.dart';
@@ -13,12 +9,13 @@ import 'package:suja_shoie_app/feature/domain/entity/loginentity.dart';
 import 'package:suja_shoie_app/feature/presentation/pages/main_page.dart';
 import 'package:suja_shoie_app/feature/presentation/pages/spalsh_page.dart';
 import 'package:suja_shoie_app/feature/presentation/providers/loginprovider.dart';
+
 import '../../domain/repository/login_repository.dart';
 import '../../domain/usecase/login_usecase.dart';
 
 
 class LoginApiService {
-  void login({
+  Future<loginEntity?> login({
     required BuildContext context,
     required String loginId,
     required String password,
@@ -50,8 +47,10 @@ class LoginApiService {
         ),
         (route) => false,
       );
+      return loginUser;
     } catch (e) {
       ShowError.showAlert(context, e.toString());
+            rethrow;
     }
   }
 
@@ -71,6 +70,7 @@ class LoginApiService {
       );
     } catch (e) {
       ShowError.showAlert(context, e.toString());
+      rethrow;
     }
   }
 

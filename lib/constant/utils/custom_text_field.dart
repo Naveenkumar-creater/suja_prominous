@@ -10,7 +10,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(
+      constraints:  const BoxConstraints(
         maxWidth: 300,
       ),
       child: TextFormField(

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:suja_shoie_app/feature/data/core/api_constant.dart';
@@ -100,7 +101,7 @@ class LoginClient {
         throw NetworkException(
             'Failed to connect to the server. Please check your network connection.');
       } else if (e is http.ClientException) {
-        throw e;
+        rethrow; 
       }
     }
   }

@@ -8,7 +8,7 @@ class MyStatefulWidget extends StatefulWidget {
   final List<DataEntry>? initialData;
   final Function(DataEntry) onEntryAdded;
 
-  MyStatefulWidget({this.initialData, required this.onEntryAdded});
+  const MyStatefulWidget({super.key, this.initialData, required this.onEntryAdded});
 
   @override
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
@@ -99,12 +99,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     final additionalDataPointValue =
         Provider.of<AdditionalDataPointProvider>(context, listen: false);
 
-    final responseData = additionalDataPointValue?.user?.responseData;
+    final responseData = additionalDataPointValue.user?.responseData;
 
     if (responseData != null) {
       final dataPintsMstr = responseData.additionaldatapointslist;
 
-      final selectedAmdp = dataPintsMstr?.firstWhere(
+      final selectedAmdp = dataPintsMstr.firstWhere(
         (data) => data.amdpDatapointDescription == option,
       );
 
@@ -124,7 +124,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.only(left: 4, right: 4),
+          padding: const EdgeInsets.only(left: 4, right: 4),
           width: 130,
           decoration: BoxDecoration(
               color: Colors.blue, borderRadius: BorderRadius.circular(5)),
@@ -133,7 +133,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               if (isLoading) // Show loading indicator while loading
-                CircularProgressIndicator(),
+                const CircularProgressIndicator(),
               if (!isLoading)
                 DropdownButton<String>(
                   isExpanded: true,
@@ -152,20 +152,20 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     );
                   }).toList(),
                 ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
             ],
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         if (selectedOption != "Add info")
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: <Widget>[
-                  Container(width: 135, child: Text('$selectedOption')),
-                  Text(':'),
-                  SizedBox(width: 8),
+                  SizedBox(width: 135, child: Text(selectedOption)),
+                  const Text(':'),
+                  const SizedBox(width: 8),
                   Container(
                     width: 275,
                     height: 50,
@@ -210,7 +210,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       deleteRow(selectedOption);
                       dataPointsController.clear(); // Clear the text field
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.cancel,
                       color: Colors.red,
                       size: 30,
@@ -218,7 +218,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
             ],
           ),
         Column(
@@ -231,9 +231,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               children: [
                 Row(
                   children: <Widget>[
-                    Container(width: 135, child: Text(' ${entry.option} ')),
-                    Text(':'),
-                    SizedBox(width: 8),
+                    SizedBox(width: 135, child: Text(' ${entry.option} ')),
+                    const Text(':'),
+                    const SizedBox(width: 8),
                     Container(
                       width: 275,
                       height: 50,
@@ -269,7 +269,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       onPressed: () {
                         deleteRow(entry.option);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.cancel,
                         color: Colors.red,
                         size: 30,
@@ -277,7 +277,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
               ],
             );
           }).toList(),

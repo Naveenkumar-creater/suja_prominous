@@ -16,7 +16,7 @@ class QrChecklistCard extends StatelessWidget {
 
   
 
-  const QrChecklistCard({
+  const QrChecklistCard({super.key, 
     required this.statusColor,
     required this.checklistName,
     required this.statusText,

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:suja_shoie_app/feature/domain/repository/datapoint_repository.dart';
-
 import 'package:suja_shoie_app/feature/domain/usecase/datapoint_usecase.dart';
 
 import '../../../constant/utils/show_snakbar.dart';

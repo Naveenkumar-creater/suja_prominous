@@ -21,7 +21,7 @@ class BarChart extends StatelessWidget {
               ?  const Color(0xFF424242):Colors.white
               
         ),
-        child: BarChartExample(),
+        child: const BarChartExample(),
       ),
     );
   }

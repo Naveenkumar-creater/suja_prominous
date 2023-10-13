@@ -52,7 +52,7 @@ class _OtherDropdownMenu extends State<OtherDropdownMenuWorkOrder> {
     return Center(
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: 110,
             height: 30,
             child: DropdownButton<int>(
@@ -60,7 +60,7 @@ class _OtherDropdownMenu extends State<OtherDropdownMenuWorkOrder> {
               elevation: 5,
               underline: Container(),
               value: selectedValueIndex,
-              icon: Icon(Icons.arrow_drop_down),
+              icon: const Icon(Icons.arrow_drop_down),
               iconEnabledColor:
                   themeState.isDarkTheme ? Colors.blue : Colors.blue,
               style: TextStyle(
@@ -134,14 +134,14 @@ class CustomBottomSheet extends StatelessWidget {
   final String text;
   final Widget content;
 
-  const CustomBottomSheet({
+  const CustomBottomSheet({super.key, 
     required this.text,
     required this.content,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 400,
       child: Padding(
         padding: const EdgeInsets.all(16),

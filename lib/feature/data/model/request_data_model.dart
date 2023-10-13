@@ -16,10 +16,13 @@ class ApiRequestDataModel {
   String? clientId;
   String? personId;
   int? acrpInspectionStatus;
+  int ? timeStatus;
+  int ?machineStaus;
 
   ApiRequestDataModel(
       {this.clientAuthToken,
       required this.apiFor,
+      this.timeStatus,
       this.assetid,
       this.personId,
       this.planId,
@@ -34,7 +37,8 @@ class ApiRequestDataModel {
       this.clientId,
       this.assetbarcode,
       this.acrpInspectionStatus,
-      this.inspectionstatus});
+      this.inspectionstatus,
+      this.machineStaus});
 
   Map<String, dynamic> toJson() {
     return {
@@ -54,7 +58,9 @@ class ApiRequestDataModel {
       'personId': personId,
       'acrd_id': acrdId,
       'acrp_inspection_status': acrpInspectionStatus,
-      'inspection_status': inspectionstatus
+      'inspection_status': inspectionstatus,
+      'timer_status':timeStatus,
+      "Machine_Status":machineStaus
     };
   }
 }

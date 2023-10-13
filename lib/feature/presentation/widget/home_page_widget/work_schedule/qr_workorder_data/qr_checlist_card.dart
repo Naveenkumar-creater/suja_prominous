@@ -37,7 +37,7 @@ class _CheckListCardViewState extends State<QrCheklistCard> {
   }
 
   Future<void> _fetchCheckList() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     try {
       await _qrScannerService.getCheckList(
         context: context,
@@ -64,7 +64,7 @@ class _CheckListCardViewState extends State<QrCheklistCard> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => MainPage(),
+            builder: (context) => const MainPage(),
           ),
         );
         return true; // Prevent default back button behavior
@@ -72,7 +72,7 @@ class _CheckListCardViewState extends State<QrCheklistCard> {
       child: Scaffold(
         appBar: AppBar(
            automaticallyImplyLeading: true,
-                       iconTheme: IconThemeData(
+                       iconTheme: const IconThemeData(
     color: Colors.white, 
   ),
           toolbarHeight: 90,
@@ -106,7 +106,7 @@ class _CheckListCardViewState extends State<QrCheklistCard> {
                             children: [
                                Text(
                       firstChecklistItem  ,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -138,7 +138,7 @@ class _CheckListCardViewState extends State<QrCheklistCard> {
                   )
                 : checklist.isEmpty
                     ? const Center(
-                        child: Text("Unknown Asset", style: const TextStyle(fontSize: 30.0)),
+                        child: Text("Unknown Asset", style: TextStyle(fontSize: 30.0)),
                       )
                     : Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -154,8 +154,8 @@ class _CheckListCardViewState extends State<QrCheklistCard> {
                                 flex: 1,
                                 child: Container(
                                   padding:
-                                      EdgeInsets.only(left: defaultPadding * 5),
-                                  child: Text(
+                                      const EdgeInsets.only(left: defaultPadding * 5),
+                                  child: const Text(
                                     "Work Order",
                                     style: TextStyle(
                                         fontSize: 16,
@@ -166,8 +166,8 @@ class _CheckListCardViewState extends State<QrCheklistCard> {
                                 flex: 1,
                                 child: Container(
                                   padding:
-                                      EdgeInsets.only(left: defaultPadding * 5),
-                                  child: Text(
+                                      const EdgeInsets.only(left: defaultPadding * 5),
+                                  child: const Text(
                                     "Support Ticket",
                                     style: TextStyle(
                                         fontSize: 16,
@@ -178,8 +178,8 @@ class _CheckListCardViewState extends State<QrCheklistCard> {
                                 flex: 1,
                                 child: Container(
                                   padding:
-                                      EdgeInsets.only(left: defaultPadding * 5),
-                                  child: Text(
+                                      const EdgeInsets.only(left: defaultPadding * 5),
+                                  child: const Text(
                                     "Other Task",
                                     style: TextStyle(
                                         fontSize: 16,

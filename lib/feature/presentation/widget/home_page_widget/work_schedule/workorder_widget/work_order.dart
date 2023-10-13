@@ -18,7 +18,7 @@ class WorkOrder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(physics: NeverScrollableScrollPhysics(),
+    return GridView.builder(physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: 4,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -56,6 +56,7 @@ class WorkOrder extends StatelessWidget {
           //   ),
           // );
         }
+        return null;
       },
     );
   }

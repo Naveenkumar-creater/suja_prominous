@@ -15,7 +15,6 @@ class DataPointDataSourceimpl extends DataPointDataSource {
 
     final result = DataPointModel.fromJson(response);
 
-    // ignore: avoid_print
     print(result);
 
     return result;

@@ -27,6 +27,7 @@ class _CheklistDropDown extends State<CheklistDropDown> {
     final themeState = Provider.of<ThemeProvider>(context);
     
 final sheetInfoList = [
+   SheetInfo(text: 'Pending', content: AssetListDataTable(context, statuscount: 101)),
   SheetInfo(text: 'Open', content: AssetListDataTable(context, statuscount: 1)),
   SheetInfo(text: 'In Progress', content: AssetListDataTable(context, statuscount: 2)),
   SheetInfo(text: 'Complete', content: AssetListDataTable(context, statuscount: 3)),
@@ -46,31 +47,37 @@ final sheetInfoList = [
         child: Column(
           children: [
              DropdownMenuWorkOrder(
-              Open: Column(
+              pending:const Column(
+                children: [
+                  Text('Content for Pending'),
+                  // Add additional widgets specific to the 'option' option
+                ],
+              ),
+              open: const Column(
                 children: [
                   Text('Content for Option'),
                   // Add additional widgets specific to the 'option' option
                 ],
               ),
-              inProgress: Column(
+              inProgress: const Column(
                 children: [
                   Text('Content for In Progress'),
                   // Add additional widgets specific to the 'inProgress' option
                 ],
               ),
-              complete: Column(
+              complete: const Column(
                 children: [
                   Text('Content for Complete'),
                   // Add additional widgets specific to the 'complete' option
                 ],
               ),
-              overdue: Column(
+              overdue: const Column(
                 children: [
                   Text('Content for Overdue'),
                   // Add additional widgets specific to the 'overdue' option
                 ],
               ),
-              reject: Column(
+              reject: const Column(
                 children: [
                   Text('Content for Overdue'),
                   // Add additional widgets specific to the 'overdue' option
@@ -79,7 +86,7 @@ final sheetInfoList = [
       
               bottomSheetInfo: sheetInfoList, 
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Headings(

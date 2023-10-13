@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../pages/cheklist_details_page.dart';
-import 'asset_list_workschedule.dart';
 import 'checklist_qrcode_scanner.dart';
 
 class ChecklistCard extends StatelessWidget {
@@ -14,7 +13,7 @@ class ChecklistCard extends StatelessWidget {
   final int assetId;
 
 
-  const ChecklistCard({
+  const ChecklistCard({super.key, 
     required this.statusColor,
     required this.checklistName,
     required this.statusText,

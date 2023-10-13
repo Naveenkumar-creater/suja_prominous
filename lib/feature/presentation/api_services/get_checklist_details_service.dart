@@ -3,20 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
 import 'package:suja_shoie_app/feature/data/data_source/Remote/remote_abstract/get_checklist_deatils_data_source.dart';
 import 'package:suja_shoie_app/feature/data/repository/get_checklist_Details_repository_impl.dart';
 import 'package:suja_shoie_app/feature/domain/entity/getchecklist_details_entity.dart';
-
 import 'package:suja_shoie_app/feature/domain/repository/get_checklist_details_repository.dart';
-
 import 'package:suja_shoie_app/feature/domain/usecase/get_checklist_Details_usecase.dart';
 
 import '../../../constant/utils/show_snakbar.dart';
 import '../../data/core/get_check_list_details_api_client .dart';
 import '../../data/data_source/Remote/reomote_data_source/get_checklist_details_data_source_impl.dart';
-
 import '../providers/get_checklist_details_provider.dart';
 
 class GetChecklistService {
@@ -57,13 +52,4 @@ class GetChecklistService {
   }
 }
 
-// void showSnackBar(BuildContext? context, String message) {
-//   if (context != null) {
-//     final snackBar = SnackBar(
-//       backgroundColor: Colors.amber[400],
-//       content:
-//           Center(child: Text(message, style: TextStyle(color: Colors.black))),
-//     );
-//     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-//   }
-// }
+

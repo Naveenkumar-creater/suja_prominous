@@ -3,16 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:suja_shoie_app/constant/utils/lottieLoadingAnimation.dart';
 import 'package:suja_shoie_app/constant/utils/theme_styles.dart';
 
-
 import '../../../../api_services/checklist_service.dart';
 import '../../../../api_services/qrscanner_service.dart';
 import '../../../../pages/main_page.dart';
 import '../../../../providers/checklist_provider.dart';
 import '../../../../providers/theme_providers.dart';
-
 import 'asset_list_expended.dart';
-import 'asset_staus_color.dart';
-import 'package:intl/intl.dart';
 
 class CheckListCardView extends StatefulWidget {
   final int assetId;
@@ -21,7 +17,7 @@ class CheckListCardView extends StatefulWidget {
   // final String barcode;
 
   const CheckListCardView(
-      this.assetId, 
+      this.assetId, {super.key}
       // this.asstName, this.location, this.barcode);
   );
   @override
@@ -43,7 +39,7 @@ void initState() {
 Future<void> _fetchCheckList() async {
   try {
     // Simulate a 2-second loading delay
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     await _checkListService.getCheckList(
       context: context,
@@ -72,7 +68,7 @@ Future<void> _fetchCheckList() async {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => MainPage(),
+            builder: (context) => const MainPage(),
           ),
         );
         return true; // Prevent default back button behavior
@@ -80,7 +76,7 @@ Future<void> _fetchCheckList() async {
       child: Scaffold(
        appBar: AppBar(
          automaticallyImplyLeading: true,
-                       iconTheme: IconThemeData(
+                       iconTheme: const IconThemeData(
     color: Colors.white, 
   ),
          title: PreferredSize(
@@ -160,8 +156,8 @@ Future<void> _fetchCheckList() async {
                                 flex: 1,
                                 child: Container(
                                   padding:
-                                      EdgeInsets.only(left: defaultPadding * 5),
-                                  child: Text(
+                                      const EdgeInsets.only(left: defaultPadding * 5),
+                                  child: const Text(
                                     "Work Order",
                                     style: TextStyle(
                                         fontSize: 16,
@@ -172,8 +168,8 @@ Future<void> _fetchCheckList() async {
                                 flex: 1,
                                 child: Container(
                                   padding:
-                                      EdgeInsets.only(left: defaultPadding * 5),
-                                  child: Text(
+                                      const EdgeInsets.only(left: defaultPadding * 5),
+                                  child: const Text(
                                     "Support Ticket",
                                     style: TextStyle(
                                         fontSize: 16,
@@ -184,8 +180,8 @@ Future<void> _fetchCheckList() async {
                                 flex: 1,
                                 child: Container(
                                   padding:
-                                      EdgeInsets.only(left: defaultPadding * 5),
-                                  child: Text(
+                                      const EdgeInsets.only(left: defaultPadding * 5),
+                                  child: const Text(
                                     "Other Task",
                                     style: TextStyle(
                                         fontSize: 16,
@@ -207,6 +203,8 @@ Future<void> _fetchCheckList() async {
 }
 
 class OtherPage extends StatelessWidget {
+  const OtherPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

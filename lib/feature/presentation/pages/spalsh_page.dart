@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     super.initState();
 
     // Delay for 2 seconds and then navigate to the login page
-    Future.delayed(Duration(milliseconds: 1500), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       Navigator.push(
         context,
         PageTransition(

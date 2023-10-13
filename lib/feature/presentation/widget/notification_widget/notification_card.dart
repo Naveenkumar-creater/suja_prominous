@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:suja_shoie_app/constant/utils/lottieLoadingAnimation.dart';
-import 'package:suja_shoie_app/feature/presentation/providers/asset_list_provider.dart';
-import 'package:suja_shoie_app/feature/presentation/widget/home_page_widget/work_schedule/assetlist_workschedule/asset_list_workschedule.dart';
 
 import '../../api_services/overdue_notification_service.dart';
 import '../../providers/overdue_notification_provider.dart';

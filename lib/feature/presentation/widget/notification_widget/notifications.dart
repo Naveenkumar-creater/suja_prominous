@@ -30,8 +30,8 @@ class Notifications extends StatelessWidget {
               children: [
                 
                 NotificationCard(context),
-                Headings(text:'Notifications'),
-                SizedBox(height:6)
+                const Headings(text:'Notifications'),
+                const SizedBox(height:6)
               ]),
         ),
       ),

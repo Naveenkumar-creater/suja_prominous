@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 // ignore: depend_on_referenced_packages
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../constant/utils/exception/network_exception.dart';
 
 class ApiConstant {
   
@@ -47,11 +50,17 @@ class ApiConstant {
         print(jsonDecode(response.body));
         return jsonDecode(response. body);
       }
-    } on TimeoutException {
-      throw ('Connection timed out. Please check your internet connection.');
+    }on TimeoutException {
+      throw ("Sorry, the request took too long to process. Please try again later.");
     } catch (e) {
-      throw (e);
-    }
-  }
+      //  print(e);
+      if (e is SocketException) {
+        throw NetworkException(
+            'Failed to connect to the server. Please check your network connection.');
+      } else if (e is http.ClientException) {
+        rethrow; 
+      }
 }
+  }
 
+}

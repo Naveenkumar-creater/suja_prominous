@@ -76,13 +76,13 @@ class _DropdownMenuCircularState extends State<DropdownMenuCircular> {
               ),
             ),
           ),
-          const SizedBox(height: defaultPadding * 3),
-          GestureDetector(
-            onTap: () {
-              _showBottomSheet(context);
-            },
-            child: widget.widgetOptions[selectedValueIndex],
-          ),
+          // const SizedBox(height: defaultPadding * 3),
+          // GestureDetector(
+          //   onTap: () {
+          //     _showBottomSheet(context);
+          //   },
+          //   child: widget.widgetOptions[selectedValueIndex],
+          // ),
         ],
       ),
     );
@@ -138,7 +138,7 @@ class CustomBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 400,
       child: Padding(
         padding: const EdgeInsets.all(defaultPadding),

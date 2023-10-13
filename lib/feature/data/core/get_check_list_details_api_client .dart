@@ -10,10 +10,10 @@ class GetCheckListDetailsClient {
     ApiRequestDataModel requestData = ApiRequestDataModel(
       clientAuthToken: token,
       apiFor: "get_check_list_details",
-     planId: planId,
+      planId: planId,
       fromDateTime: ApiConstant.fromDate,
       toDateTime: toDate,
-     acrpInspectionStatus:acrpinspectionstatus,
+      acrpInspectionStatus: acrpinspectionstatus,
     );
     // final Map<String, dynamic> requestData = {
     //   "client_aut_token": token,
@@ -22,14 +22,14 @@ class GetCheckListDetailsClient {
     //   "from_date_time": "2023-08-01 10:00:00",
     //   "to_date_time": toDate,
     //   'acrp_inspection_status':2
-    
+
     // };
 
-  final apiConstant = ApiConstant();
-      final headers = {
+    final apiConstant = ApiConstant();
+    final headers = {
       'Content-Type': 'application/json',
     };
-  
+
     return await apiConstant.makeApiRequest(
       url: ApiConstant.baseUrl,
       headers: headers,

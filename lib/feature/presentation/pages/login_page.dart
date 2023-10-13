@@ -11,7 +11,7 @@ class Loginpage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/sujashoei.jpeg'),fit: BoxFit.cover)),
         child: Column(
@@ -34,7 +34,7 @@ class Loginpage extends StatelessWidget {
                       width: 500,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(193, 189, 189, 189),
+                          color: const Color.fromARGB(193, 189, 189, 189),
                           borderRadius: BorderRadiusDirectional.circular(5)),
                       child: const SizedBox(
                         width: 450,
@@ -54,7 +54,7 @@ class Loginpage extends StatelessWidget {
                       width: 500,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(193, 189, 189, 189),
+                          color: const Color.fromARGB(193, 189, 189, 189),
                           borderRadius: BorderRadiusDirectional.circular(5)),
                       child: const SizedBox(
                         width: 450,

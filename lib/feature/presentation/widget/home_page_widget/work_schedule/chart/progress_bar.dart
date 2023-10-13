@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:suja_shoie_app/constant/utils/font_styles.dart';
+import 'package:suja_shoie_app/feature/presentation/api_services/get_machine_count_service.dart';
+import 'package:suja_shoie_app/feature/presentation/providers/get_machine_count_provider.dart';
 
 import '../../../../../../constant/utils/theme_styles.dart';
 import '../../../../providers/theme_providers.dart';
@@ -65,22 +68,34 @@ class CompleteProgressBar extends StatefulWidget {
 
 class _CompleteProgressBarState extends State<CompleteProgressBar>
     with SingleTickerProviderStateMixin {
+
+      GetmachineCountService getmachineCountService=  GetmachineCountService();
   @override
   void initState() {
    
     super.initState();
+    getmachineCount();
   }
+
+  void getmachineCount(){
+    getmachineCountService.getMachineCount(context: context, machineStatus: 3);
+  }
+  
 
   @override
   Widget build(BuildContext context) {
+    final machinecount= Provider.of<GetMachineCountProvider>(context,listen:false).user;
+    var  acrpAssetIdCount =machinecount?.acrpAssetIdCount ??0;
+    var  acrpInspectionStatusCount=machinecount?.acrpInspectionStatusCount ?? 0;
     return CustomPaint(
-        foregroundPainter: CircularProgressBar(),
-        child: const Column(
-          children: [SizedBox(height: defaultPadding/2,),
+        foregroundPainter: CircularProgressBar( 
+  acrpAssetIdCount:acrpAssetIdCount,acrpInspectionStatusCount: acrpInspectionStatusCount,),
+        child:  Column(
+          children: [const SizedBox(height: defaultPadding/2,),
             Center(
                 child: Text(
-              '0/0',
-              style: TextStyle(fontSize: 30),
+              '$acrpInspectionStatusCount/$acrpAssetIdCount',
+              style: const TextStyle(fontSize: 30),
             )),
           ],
         ));

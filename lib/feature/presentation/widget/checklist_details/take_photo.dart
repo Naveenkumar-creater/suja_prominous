@@ -10,7 +10,7 @@ class ImageCapture extends StatefulWidget {
   final List<File?> capturedImages;
   final void Function(List<File?>) onImagesCaptured; // Callback to update images in the parent widget
 
-  ImageCapture({
+  const ImageCapture({super.key, 
     required this.capturedImages,
     required this.onImagesCaptured,
   });
@@ -21,8 +21,8 @@ class ImageCapture extends StatefulWidget {
 }
 class _ImageCaptureState extends State<ImageCapture> {
   final ImagePicker _picker = ImagePicker();
-  List<File?> _capturedImages = [];
-  List<String> _imageNames = [];
+  final List<File?> _capturedImages = [];
+  final List<String> _imageNames = [];
   bool _cancelIconVisible = true;
   String _fileSize = '';
 
@@ -55,14 +55,14 @@ class _ImageCaptureState extends State<ImageCapture> {
                       Navigator.of(context).pop();
                     },
                     child: Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
                       child: Icon(
                         Icons.cancel,
                         color: Colors.red,
                         size: 32.0,
-                      ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -92,7 +92,7 @@ class _ImageCaptureState extends State<ImageCapture> {
           _fileSize = '${(fileSize / (1024)).toStringAsFixed(2)} KB';
         });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Image resizing failed.'),
         ));
       }
@@ -139,12 +139,12 @@ void _deleteImage(int index) {
         children: <Widget>[
           IconButton(
             onPressed: captureAndResizeImage,
-            icon: Icon(Icons.image, size: 50, color: Colors.blue),
+            icon: const Icon(Icons.image, size: 50, color: Colors.blue),
           ),
-          SizedBox(width: defaultPadding,),
+          const SizedBox(width: defaultPadding,),
            Expanded(
             child: Container(
-              padding: EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.only(top: 16),
               height: 100,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -156,7 +156,7 @@ void _deleteImage(int index) {
                       alignment: Alignment.topRight,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(6),
+                          padding: const EdgeInsets.all(6),
                           height: 75,
                           width: 100,
                           child: Image.file(widget.capturedImages[index]!),
@@ -165,11 +165,11 @@ void _deleteImage(int index) {
                           GestureDetector(
                             onTap: () => _deleteImage(index),
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.white,
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.cancel,
                                 color: Colors.red,
                                 size: 17.0,

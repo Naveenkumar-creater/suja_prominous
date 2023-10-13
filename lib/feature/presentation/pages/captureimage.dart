@@ -20,7 +20,7 @@ class CaptureImage extends StatefulWidget {
   final int pageId;
   final int acrpinspectionstatus;
   final int assetid;
-  CaptureImage(BuildContext context, this.planId, this.pageId, this.acrpinspectionstatus, this.assetid);
+  const CaptureImage(BuildContext context, this.planId, this.pageId, this.acrpinspectionstatus, this.assetid, {super.key});
 
   @override
   _ImageCaptureState createState() => _ImageCaptureState();
@@ -28,8 +28,8 @@ class CaptureImage extends StatefulWidget {
 
 class _ImageCaptureState extends State<CaptureImage> {
   final ImagePicker _picker = ImagePicker();
-  List<File?> _capturedImages = [];
-  List<String> _imageNames = [];
+  final List<File?> _capturedImages = [];
+  final List<String> _imageNames = [];
   bool _cancelIconVisible = false;
   String _fileSize = '';
   bool _imageCaptured = false;
@@ -59,7 +59,7 @@ class _ImageCaptureState extends State<CaptureImage> {
           _processingImage = false; // Set processing flag to false
         });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Image resizing failed.'),
         ));
 
@@ -140,7 +140,7 @@ class _ImageCaptureState extends State<CaptureImage> {
 
   @override
   Widget build(BuildContext context) {
-    final int data = 1;
+    const int data = 1;
 
     final response = Provider.of<AssetListProvider>(context, listen: false)
         .user
@@ -166,7 +166,7 @@ class _ImageCaptureState extends State<CaptureImage> {
               shadowColor: Colors.black,
               child: Column(
                 children: [
-       SizedBox(height: 40,),
+       const SizedBox(height: 40,),
                   Stack(
                     children: [
                       Column(
@@ -175,7 +175,7 @@ class _ImageCaptureState extends State<CaptureImage> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(left: 225, bottom: 10),
-                            child: Container(
+                            child: SizedBox(
                               height: 300,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
@@ -189,11 +189,11 @@ class _ImageCaptureState extends State<CaptureImage> {
                                         GestureDetector(
                                           onTap: () => _deleteImage(index),
                                           child: Container(
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                               color: Colors.white,
                                             ),
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.cancel,
                                               color: Colors.red,
                                               size: 40.0,
@@ -221,7 +221,7 @@ class _ImageCaptureState extends State<CaptureImage> {
                                         0.5), // Specify the shadow color here
                                     spreadRadius: 2,
                                     blurRadius: 2,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 2), // Adjust the offset if needed
                                   ),
                                 ],
@@ -234,13 +234,13 @@ class _ImageCaptureState extends State<CaptureImage> {
                                     size: 80,
                                     color: _imageCaptured
                                         ? Colors.black12
-                                        : Color.fromARGB(86, 33, 149, 243),
+                                        : const Color.fromARGB(86, 33, 149, 243),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           const Column(
@@ -263,7 +263,7 @@ class _ImageCaptureState extends State<CaptureImage> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
@@ -285,14 +285,14 @@ class _ImageCaptureState extends State<CaptureImage> {
                                     );
                                   }
                                 },
-                                child: const Text("Okay"),
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
                                   backgroundColor:
                                       _imageCaptured ? Colors.blue : Colors.grey,
                                 ),
+                                child: const Text("Okay"),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 40,
                               ),
                               ElevatedButton(

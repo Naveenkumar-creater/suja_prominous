@@ -58,6 +58,8 @@ class CheckListDataEntity {
   // ignore: prefer_typing_uninitialized_variables
   final acrpassetId;
   //  final int acrpinspectionstatus;
+
+  final String acpinspectionDate;
   CheckListDataEntity(
       {required this.checklistname,
       required this.maintenancetypename,
@@ -69,22 +71,34 @@ class CheckListDataEntity {
       required this.inspectiondate,
       required this.planid,
       required this .acrpassetId,
+      required this.acpinspectionDate
       // required this.acrpinspectionstatus,
       });
 
   factory CheckListDataEntity.fromJson(Map<String, dynamic> json) {
     return CheckListDataEntity(
       checklistname: json['check_list_name'],
-      maintenancetypename: json['maintenance_type_name'],
+
+      maintenancetypename: json['maintenance_type_name']
+      ,
       assetbarcode: json['asset_bar_code'],
+
       assetname: json['asset_name'],
+
       registerid: json['registerid'],
+
       checkliststatus: json['acrp_inspection_status'],
       checklistfrequency: json['checklist_frequency'],
+
       inspectiondate: json['inspection_date'],
       planid: json['plan_id'],
-     acrpassetId :json['acrp_asset_id']
+     acrpassetId :json['acrp_asset_id'],
+     acpinspectionDate:json['acrp_actual_inspection_to_time']
       // acrpinspectionstatus:json['acrp_inspection_status'],
     );
   }
 }
+
+
+
+

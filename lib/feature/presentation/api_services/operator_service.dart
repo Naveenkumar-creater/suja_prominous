@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:suja_shoie_app/feature/data/core/operator_api_client.dart';
 import 'package:suja_shoie_app/feature/data/data_source/Remote/remote_abstract/operator_data_source.dart';
 import 'package:suja_shoie_app/feature/data/repository/operator_repository_impl.dart';
@@ -11,6 +9,7 @@ import 'package:suja_shoie_app/feature/domain/entity/operator_entity.dart';
 import 'package:suja_shoie_app/feature/domain/repository/operator_repository.dart';
 import 'package:suja_shoie_app/feature/domain/usecase/operator_usecase.dart';
 import 'package:suja_shoie_app/feature/presentation/providers/operator_provider.dart';
+
 import '../../../constant/utils/show_snakbar.dart';
 import '../../data/data_source/Remote/reomote_data_source/operator_data_source_impl.dart';
 

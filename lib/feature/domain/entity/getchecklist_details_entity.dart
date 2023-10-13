@@ -7,7 +7,7 @@ class ChecklistDetailsEntity extends Equatable {
   final int wsReqId;
   final String responseMsg;
 
-  ChecklistDetailsEntity({
+   const ChecklistDetailsEntity({
     required this.responseCode,
     required this.responseData,
     required this.wsReqId,
@@ -33,7 +33,6 @@ class ModelResponseData {
     );
   }
 
-  get checklistDatapointsList => null;
 }
 
 class ChecklistDataDetailsEntity extends Equatable {
@@ -54,11 +53,11 @@ class ChecklistDataDetailsEntity extends Equatable {
   final String acrpinspectiondate;
   final int acrhassetoperatorid;
   final String acrpinspectiontotime;
-  late final String notes;
+  final String notes;
   final String employeenumber;
   final String headerimageurl;
 
-  ChecklistDataDetailsEntity(
+  const ChecklistDataDetailsEntity(
       {required this.seqNo,
       required this.checkpoint,
       required this.checklistName,

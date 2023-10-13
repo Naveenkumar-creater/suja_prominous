@@ -10,7 +10,7 @@ class QrChecklistWidget extends StatelessWidget {
   final List checklist; // Replace with your data model
   final String title; // The dynamic title you want to show
 
-  const QrChecklistWidget({
+  const QrChecklistWidget({super.key, 
     required this.checklist,
     required this.title,
   });
@@ -23,10 +23,10 @@ class QrChecklistWidget extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(left: defaultPadding / 2),
+            padding: const EdgeInsets.only(left: defaultPadding / 2),
             child: Text(
               title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ),
           Expanded(
