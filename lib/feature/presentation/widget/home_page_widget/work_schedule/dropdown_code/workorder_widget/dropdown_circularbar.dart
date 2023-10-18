@@ -11,6 +11,7 @@ class DropdownMenuCircular extends StatefulWidget {
   final Widget complete;
   final Widget overdue;
   final List<Widget> widgetOptions;
+  final void Function(int index) onDropdownChanged;
 
   const DropdownMenuCircular({
     Key? key,
@@ -19,10 +20,10 @@ class DropdownMenuCircular extends StatefulWidget {
     required this.complete,
     required this.overdue,
     required this.widgetOptions,
+    required this.onDropdownChanged,
   }) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _DropdownMenuCircularState createState() => _DropdownMenuCircularState();
 }
 
@@ -30,9 +31,9 @@ class _DropdownMenuCircularState extends State<DropdownMenuCircular> {
   int selectedValueIndex = 0;
 
   List<String> dropdownOptions = [
+    'ALL',
     'Open',
     'In Progress',
-    'Complete',
     'Overdue',
   ];
 
@@ -76,13 +77,13 @@ class _DropdownMenuCircularState extends State<DropdownMenuCircular> {
               ),
             ),
           ),
-          // const SizedBox(height: defaultPadding * 3),
-          // GestureDetector(
-          //   onTap: () {
-          //     _showBottomSheet(context);
-          //   },
-          //   child: widget.widgetOptions[selectedValueIndex],
-          // ),
+          const SizedBox(height: defaultPadding * 3),
+          GestureDetector(
+            onTap: () {
+              _showBottomSheet(context);
+            },
+            child: widget.widgetOptions[selectedValueIndex],
+          ),
         ],
       ),
     );
@@ -94,15 +95,15 @@ class _DropdownMenuCircularState extends State<DropdownMenuCircular> {
 
     switch (selectedValueIndex) {
       case 0:
-        text = 'Open';
+        text = 'ALL';
         content = widget.option;
         break;
       case 1:
-        text = 'In Progress';
+        text = 'Open';
         content = widget.inProgress;
         break;
       case 2:
-        text = 'Complete';
+        text = 'In Progress';
         content = widget.complete;
         break;
       case 3:
@@ -113,6 +114,7 @@ class _DropdownMenuCircularState extends State<DropdownMenuCircular> {
         text = '';
         content = const SizedBox();
     }
+    // DropdownButton in DropdownMenuCircular
 
     showModalBottomSheet(
       context: context,

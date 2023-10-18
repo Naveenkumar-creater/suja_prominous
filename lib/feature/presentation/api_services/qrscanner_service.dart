@@ -20,6 +20,7 @@ class QrScannerService {
     required String barcode,
   }) async {
     try {
+      
       SharedPreferences pref = await SharedPreferences.getInstance();
       String token = pref.getString("client_token") ?? "";
 

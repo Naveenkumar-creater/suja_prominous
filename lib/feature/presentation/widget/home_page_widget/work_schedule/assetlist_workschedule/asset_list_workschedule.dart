@@ -38,8 +38,8 @@ void initState() {
 
 Future<void> _fetchCheckList() async {
   try {
-    // Simulate a 2-second loading delay
-    await Future.delayed(const Duration(seconds: 1));
+    // // Simulate a 2-second loading delay
+    // await Future.delayed(const Duration(seconds: 1));
 
     await _checkListService.getCheckList(
       context: context,

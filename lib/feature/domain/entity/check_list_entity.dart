@@ -56,10 +56,10 @@ class CheckListDataEntity {
   final String inspectiondate;
   final int planid;
   // ignore: prefer_typing_uninitialized_variables
-  final acrpassetId;
+  final int acrpassetId;
   //  final int acrpinspectionstatus;
 
-  final String acpinspectionDate;
+  // final String acpinspectionDate;
   CheckListDataEntity(
       {required this.checklistname,
       required this.maintenancetypename,
@@ -71,7 +71,7 @@ class CheckListDataEntity {
       required this.inspectiondate,
       required this.planid,
       required this .acrpassetId,
-      required this.acpinspectionDate
+      // required this.acpinspectionDate
       // required this.acrpinspectionstatus,
       });
 
@@ -90,14 +90,19 @@ class CheckListDataEntity {
       checkliststatus: json['acrp_inspection_status'],
       checklistfrequency: json['checklist_frequency'],
 
-      inspectiondate: json['inspection_date'],
+      inspectiondate: json['acrp_inspection_date'],
       planid: json['plan_id'],
      acrpassetId :json['acrp_asset_id'],
-     acpinspectionDate:json['acrp_actual_inspection_to_time']
+    //  acpinspectionDate:json['acrp_actual_inspection_to_time']
       // acrpinspectionstatus:json['acrp_inspection_status'],
     );
   }
 }
+
+
+
+
+
 
 
 

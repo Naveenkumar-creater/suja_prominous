@@ -1,4 +1,5 @@
 {
-    "base_url": "http://192.168.29.248:8001/AtmaInterfaceAPI/wsservice"
-  } 
-  
+  "base_url": "http://192.168.29.131:8080/AtmaInterfaceAPI/wsservice"
+} 
+
+

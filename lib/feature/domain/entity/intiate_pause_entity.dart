@@ -25,6 +25,5 @@ class ResponseData {
 
  factory ResponseData.fromJson(Map<String, dynamic> json) {
   return ResponseData(message: json['message'] );
-  
   }
 }

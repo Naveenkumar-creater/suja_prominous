@@ -1,5 +1,3 @@
-
-
 import '../../../model/additional_datapoint_model.dart';
 
 abstract class AdditionalDataPointDataSource {
