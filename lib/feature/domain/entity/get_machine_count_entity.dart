@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-// class GetMachineCountEntity extends Equatable {
+// class  GetMachineCountEntity extends Equatable {
 //   int? responseCode;
 //   ResponseData? responseData;
 //   int? wsReqId;

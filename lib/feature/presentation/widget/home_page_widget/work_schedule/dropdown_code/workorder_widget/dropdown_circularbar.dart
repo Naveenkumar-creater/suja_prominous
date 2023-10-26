@@ -31,10 +31,11 @@ class _DropdownMenuCircularState extends State<DropdownMenuCircular> {
   int selectedValueIndex = 0;
 
   List<String> dropdownOptions = [
-    'ALL',
+    'Pending',
     'Open',
     'In Progress',
     'Overdue',
+    'Completed'
   ];
 
   @override
@@ -95,7 +96,7 @@ class _DropdownMenuCircularState extends State<DropdownMenuCircular> {
 
     switch (selectedValueIndex) {
       case 0:
-        text = 'ALL';
+        text = 'Pending';
         content = widget.option;
         break;
       case 1:
@@ -108,6 +109,10 @@ class _DropdownMenuCircularState extends State<DropdownMenuCircular> {
         break;
       case 3:
         text = 'Overdue';
+        content = widget.overdue;
+        break;
+          case 4:
+        text = 'Completed';
         content = widget.overdue;
         break;
       default:

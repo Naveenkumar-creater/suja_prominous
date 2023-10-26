@@ -1167,14 +1167,14 @@ class _CheckPointDetailsState extends State<CheckPointDetails> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        chekListname,
-                                        style: const TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
+                                      // Text(
+                                      //   chekListname,
+                                      //   style: const TextStyle(
+                                      //     fontSize: 25,
+                                      //     fontWeight: FontWeight.bold,
+                                      //     color: Colors.white,
+                                      //   ),
+                                      // ),
                                       if (isTextFieldVisible)
                                         // Show TextField conditionally
                                         if (widget.acrpinspectionstatus == 3 ||

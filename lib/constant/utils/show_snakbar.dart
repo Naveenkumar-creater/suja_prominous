@@ -23,11 +23,11 @@ class ShowError {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(backgroundColor: Colors.white,
-            title: Text('Error'),
+            title: const Text('Error'),
             content: Text(message),
             actions: <Widget>[
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

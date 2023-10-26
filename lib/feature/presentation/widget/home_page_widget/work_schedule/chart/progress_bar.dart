@@ -58,7 +58,8 @@ class _ProgressBarState extends State<ProgressBar> {
                   _buildProgressBar(300), // Complete
                   _buildProgressBar(400), // InProgress
                   _buildProgressBar(500),
-                  _buildProgressBar(600), // Overdue
+                  _buildProgressBar(600), 
+                  _buildProgressBar(700),// Overdue
                 ],
                 onDropdownChanged: onDropdownChanged,
               ),
@@ -104,6 +105,8 @@ class _ProgressBarState extends State<ProgressBar> {
           final statusCount =
               snapshot.data?['acrpInspectionStatusCount'] as int? ?? 0;
           final assetIdCount = snapshot.data?['acrpAssetIdCount'] as int? ?? 0;
+          var percentage = statusCount/assetIdCount*100;
+          var percentageString = percentage.toStringAsFixed(0);
 
           return CustomPaint(
             foregroundPainter: CircularProgressBar(
@@ -113,11 +116,22 @@ class _ProgressBarState extends State<ProgressBar> {
             child: Column(
               children: [
                 const SizedBox(height: defaultPadding / 2),
-                Center(
-                  child: Text(
-                    '$statusCount/$assetIdCount',
-                    style: const TextStyle(fontSize: 30),
-                  ),
+                Column(
+                  children: [
+                    Center(
+                      child: Text(
+                        '$statusCount/$assetIdCount',
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                    
+                    Center(
+                      child: Text(
+                        '$percentageString%',
+                        style: const TextStyle(fontSize: 15)
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
